@@ -1,6 +1,7 @@
 # vue_web
 # 进销管理管理系统
 ## 包含权限控制 列表管理 文件导入导出
+## 后面会放上来express 的服务器
 ## Project setup
 ```
 yarn install
