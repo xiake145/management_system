@@ -1,5 +1,6 @@
 # vue_web
-
+# 进销管理管理系统
+## 包含权限控制 列表管理 文件导入导出
 ## Project setup
 ```
 yarn install
