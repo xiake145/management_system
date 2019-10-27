@@ -20,7 +20,7 @@
   </el-menu>
 </template> 
 <script>
-import list from "../json/json.js";
+import tree from "../json/tree.json";
 export default {
   data() {
     return {
@@ -30,7 +30,11 @@ export default {
     };
   },
   created() {
-    this.menu = list
+    // this.menu = tree//菜单列表
+    //获取本地用户权限动态渲染页面 权限配置利用后台返回的权限数据动态渲染 导航栏
+   this.menu= tree.filter((item)=>{
+      return item.userGroup.includes(localStorage.userGroup)
+    })
 },
   //计算函数
   computed: {

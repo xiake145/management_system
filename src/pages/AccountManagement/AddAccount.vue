@@ -6,77 +6,102 @@
       <div slot="header" class="clearfix">
         <span>添加账号</span>
       </div>
-      <el-form
-        :model="ruleForm"
-        :rules="rules"
-        ref="ruleForm"
-        label-width="100px"
-        class="demo-ruleForm"
-      >
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
+
+      <el-form :label-position="labelPosition" label-width="80px">
+        <el-form-item label="添加账号">
+          <el-input placeholder="请输入账号" v-model="acc" clearable></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
+        <el-form-item label="密码">
+          <el-input placeholder="请输入密码" v-model="pwd" clearable show-password></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
+        <el-form-item label="确认密码">
+          <el-input placeholder="请确认密码" v-model="cpwd"  clearable show-password></el-input>
+            <div style="position: absolute;">
+              <span v-show="show" style="color:red;position: relative;top:-5px;">{{meg}}</span>
+            </div>
         </el-form-item>
-        <el-form-item label="选择用户组" prop="region">
-          <el-select v-model="ruleForm.region" placeholder="选择用户组">
-            <el-option label="用户组1" value="shanghai"></el-option>
-            <el-option label="用户组2" value="beijing"></el-option>
+        <el-form-item label="权限选择">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
           </el-select>
         </el-form-item>
-
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
-        </el-form-item>
       </el-form>
+      <el-button type="primary" @click="changepadd" :disabled="disabled">立即添加</el-button>
     </el-card>
   </div>
 </template>
 
 <script>
 import Header from "../../components/Header.vue";
+import {addacc} from '../../api/apis';
 export default {
   data() {
     return {
-      ruleForm: {
-        name: "",
-         region: '',
-      },
-      rules: {
-        name: [
-          { required: true, message: "用户名", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
-        ],
-        region: [
-            { required: true, message: '选择用户组', trigger: 'change' }
-          ],
-      }
+      acc: "", //账号
+      pwd: "", //密码
+      cpwd: "", //确认密码
+      options: [
+        {
+          value: 0,
+          label: "超级管理员"
+        },
+        {
+          value: 1,
+          label: "管理员"
+        },
+        {
+          value: 2,
+          label: "职员"
+        }
+      ],
+      value: "", //权限值
+      meg: "两次输入的密码不一致", //错误提示
+      show: false,
+      labelPosition:"left",
+      disabled:false,
     };
+  },
+  methods: {
+    changepadd() {
+      addacc(this.acc,this.pwd,this.value)
+      .then((result) => {
+        if (result.data=="ok") {
+          console.log(111)
+          this.open()
+        }
+      }).catch((err) => {
+        console.log(err)
+      });
+    },
+    open() {
+        this.$alert('添加成功', '添加状态', {
+          confirmButtonText: '确定',
+        });
+        this.acc="";
+        this.pwd="";
+        this.value="";
+        this.cpwd=""
+     }
   },
   //祖册组件
   components: {
     Header
   },
-  methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+  watch: {
+    cpwd() {//监听 判断是否提示
+      if (this.pwd==this.cpwd) {
+        this.show=false,this.disabled=false 
+      }else{
+        this.show=true,this.disabled=true;
+      } 
+      if(this.cpwd=="")this.show=false,this.disabled=false;
     }
-  }
+  },
 };
 </script>
 

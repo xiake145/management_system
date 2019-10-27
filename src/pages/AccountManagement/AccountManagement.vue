@@ -7,8 +7,8 @@
         <span>账号管理</span>
       </div>
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="name" label="用户名"></el-table-column>
-        <el-table-column prop="address" label="用户组"></el-table-column>
+        <el-table-column prop="account" label="用户名"></el-table-column>
+        <el-table-column prop="userGroup" label="用户组"></el-table-column>
         <el-table-column label="管理">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -22,32 +22,29 @@
 
 <script>
 import Header from "../../components/Header.vue";
+import {accountlist} from "../../api/apis"
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      tableData: []
     };
+  },
+  created () {
+    accountlist().then((result) => {
+       result.data.filter((item)=>{
+         if(item.userGroup==="0"){
+           item.userGroup="超级管理员"
+         }else if (item.userGroup==="1") {
+           item.userGroup="管理员"
+           
+         }else if (item.userGroup==="2") {
+           item.userGroup="职员"
+         }
+       })
+       this.tableData=result.data
+    }).catch((err) => {
+      
+    });;
   },
   //注册组件
   components: {

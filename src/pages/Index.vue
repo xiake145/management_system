@@ -2,7 +2,7 @@
   <div style="height:100%; width: 100%;">
     <el-row style="height:100%">
       <!-- 左边 -->
-      <el-col :span="4" style="height:100%; background-color: #545c64; ">
+      <el-col :span="4" style="height:100%; min-width: 200px; background-color: #545c64; ">
         <Nav />
       </el-col>
 
@@ -31,9 +31,12 @@ export default {
       //左侧列表
     };
   },
+  created () {
+    
+        
+  },
   //计算函数
   computed: {
-    
   },
   components: {
     Nav

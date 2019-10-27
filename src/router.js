@@ -18,7 +18,7 @@ export default new VueRouter({
     },{
         path:"/index",
         redirect:"/commoditymanagement",//重定向
-        name:"commoditymanagement",
+        name:"index",
         component:()=>import("./pages/Index"),
         children:[{
             path:"/commoditymanagement",
