@@ -1,7 +1,7 @@
 <template>
   <!-- 添加账号组件 -->
   <div>
-    <Header></Header>
+    <!-- <Header></Header> -->
     <el-card class="carpadding">
       <div slot="header" class="clearfix">
         <span>添加账号</span>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import Header from "../../components/Header.vue";
+// import Header from "../../components/Header.vue";
 import {addacc} from '../../api/apis';
 export default {
   data() {
@@ -90,7 +90,7 @@ export default {
   },
   //祖册组件
   components: {
-    Header
+    // Header
   },
   watch: {
     cpwd() {//监听 判断是否提示

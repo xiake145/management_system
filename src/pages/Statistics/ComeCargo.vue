@@ -1,12 +1,12 @@
 <template>
 <!--进货统计组件  -->
      <div>
-        <Header></Header>
+        <!-- <Header></Header> -->
     </div>
 </template>
 
 <script>
-import Header from "../../components/Header"
+// import Header from "../../components/Header"
     export default {
         data() {
             return {
@@ -15,7 +15,7 @@ import Header from "../../components/Header"
             }
         },
         components: {
-            Header,
+            // Header,
         },
     }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <!-- 添加会员账号 -->
   <div>
-    <Header></Header>
+    <!-- <Header></Header> -->
     <el-card class="carpadding">
       <div slot="header" class="clearfix">
         <span>添加会员</span>
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import Header from "../../components/Header";
+// import Header from "../../components/Header";
 export default {
   data() {
     return {
@@ -154,7 +154,7 @@ export default {
     };
   },
   components: {
-    Header
+    // Header
   },
   methods: {
     submitForm(formName) {

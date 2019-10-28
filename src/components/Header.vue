@@ -48,6 +48,8 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding-left: 20px;
+    // display: flex;
+
   .user {
     display: flex;
     align-items: center;

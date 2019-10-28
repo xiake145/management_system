@@ -1,14 +1,14 @@
 <template>
   <!-- 添加商品组件 -->
   <div>
-    <Header></Header>
+    <!-- <Header></Header> -->
     <el-card class="carpadding" :body-style="{ padding: '0px' }">
       <div slot="header" class="clearfix">
         <span>添加商品</span>
       </div>
     </el-card>
 
-    <el-row :gutter="20">
+    <el-row >
       <el-col :span="8" :offset="2">
         <div class="grid-content bg-purple">
           <el-form
@@ -20,12 +20,15 @@
           >
             <el-form-item label="商品分类" prop="region">
               <el-select v-model="ruleForm.region" placeholder="请选择商品分类">
-                <el-option label="商品分类一" value="shanghai"></el-option>
-                <el-option label="商品分类二" value="beijing"></el-option>
+                <el-option label="商品分类一" value="商品分类一"></el-option>
+                <el-option label="商品分类二" value="商品分类二"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="商品名称" prop="name">
               <el-input v-model="ruleForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="商品条形码">
+              <el-input v-model="ruleForm.code"></el-input>
             </el-form-item>
             <el-form-item label="商品售价" prop="pri">
               <el-input v-model="ruleForm.pri">
@@ -44,12 +47,12 @@
               </el-input>
             </el-form-item>
             <el-form-item label="入库数量">
-              <el-input v-model="ruleForm.inputCome1">
+              <el-input v-model="ruleForm.num">
                 <template slot="append">kg</template>
               </el-input>
             </el-form-item>
             <el-form-item label="商品重量">
-              <el-input v-model="ruleForm.inputCome1">
+              <el-input v-model="ruleForm.kg">
                 <template slot="append">kg</template>
               </el-input>
             </el-form-item>
@@ -85,21 +88,24 @@
 </template>
 
 <script>
-import Header from "../../components/Header";
+import {addgoods} from "@/api/apis"
 export default {
   data() {
     return {
       ruleForm: {
-        name: "",
-        region: "",
-        pri: "",
-        input: "",
-        inputCome: "",
-        inputCome1: ""
+        name: "",//商品名称
+        region: "",//商品分类
+        pri: "",//商品价格
+        code:"",//条形码
+        input: "",//市场价
+        inputCome: "",//商品进价
+        num: "",//入库数量
+        kg:"",//商品重量
+        unit:"",//商品单位
       },
-      radio: "1",
-      promotion: "1",
-      textarea: "",
+      radio: "1",//会员优惠
+      promotion: "2",//是否促销
+      textarea: "",//商品描述
       rules: {
         name: [
           { required: true, message: "请输入商品名称", trigger: "blur" },
@@ -116,22 +122,44 @@ export default {
     };
   },
   components: {
-    Header
+    // Header
   },
   created() {
     // console.log(this.$route.params)
   },
   methods: {
     submitForm(formName) {
+      let {pri,input,inputCome,kg,name,unit,code,num,region} = this.ruleForm;
+      //转换
+      pri = parseFloat(pri)
+      input = parseFloat(pri)
+      inputCome = parseFloat(inputCome)
+      kg = parseFloat(kg)
+      this.radio = parseInt(this.radio)
+      this.promotion = parseInt(this.promotion)
+      //使用对象传入
+      var data = {pri,input,inputCome,kg,name,unit,code,num,region,radio:this.radio,promotion:this.promotion,textarea:this.textarea}
+      
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          addgoods(data).then((result) => {
+            if(result.data=="ok"){
+               this.open3() 
+            }
+          })
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
     },
+    //提示弹框
+     open3() {
+        this.$notify({
+          title: '成功',
+          message: '商品添加成功',
+          type: 'success'
+        });
+      },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     }

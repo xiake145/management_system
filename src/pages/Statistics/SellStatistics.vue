@@ -1,7 +1,7 @@
 <template>
 <!-- 销售统计组件 -->
    <div>
-        <Header></Header>
+        <!-- <Header></Header> -->
         <div>
             <Myecharts/>
         </div>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Header from "../../components/Header"
+// import Header from "../../components/Header"
 import Myecharts from '../myecharts/Myecharts';
     export default {
         data() {
@@ -19,7 +19,7 @@ import Myecharts from '../myecharts/Myecharts';
             }
         },
         components: {
-            Header,
+            // Header,
             Myecharts,
         },
 

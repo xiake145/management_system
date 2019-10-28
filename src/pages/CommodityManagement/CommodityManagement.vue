@@ -1,8 +1,7 @@
 <template>
   <!-- 商品管理组件 -->
-  <div>
-      <div>
-        <Header></Header>
+  <div style="flex=1" >
+        <!-- <Header></Header> -->
         <el-card class="carpadding" :body-style="{ paddingBottom: '0px' }">
           <div slot="header" class="clearfix">
             <span>商品管理</span>
@@ -30,13 +29,13 @@
           </div>
         </el-card>
         <el-table :data="tableData" stripe style="width: 100%">
-          <el-table-column prop="date" label="商品条形码"></el-table-column>
+          <el-table-column prop="barCode" label="商品条形码"></el-table-column>
           <el-table-column prop="name" label="商品名称"></el-table-column>
-          <el-table-column prop="address" label="分类"></el-table-column>
-          <el-table-column prop="address" label="售价(元)"></el-table-column>
-          <el-table-column prop="address" label="促销价(市场价)"></el-table-column>
-          <el-table-column prop="address" label="库存"></el-table-column>
-          <el-table-column prop="address" label="库存总额"></el-table-column>
+          <el-table-column prop="category" label="分类"></el-table-column>
+          <el-table-column prop="salePrice" label="售价(元)"></el-table-column>
+          <el-table-column prop="marketPrice" label="促销价(市场价)"></el-table-column>
+          <el-table-column prop="stockCount" label="库存"></el-table-column>
+          <el-table-column prop="" label="库存总额"></el-table-column>
           <el-table-column label="管理">
             <template slot-scope="scope">
               <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -44,7 +43,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-row :gutter="20">
+        <el-row >
           <el-col :span="12" :offset="6">
             <div class="grid-content bg-purple">
               <div class="block">
@@ -61,14 +60,11 @@
             </div>
           </el-col>
         </el-row>
-      </div>
-    <!-- <input v-model="vulue" style="background:red"  >
-    <p v-text="vulue"></p> -->
   </div>
 </template>
 
 <script>
-import Header from "../../components/Header";
+import {commoditymanagement} from "@/api/apis"
 export default {
   methods: {
     handleSizeChange(val) {
@@ -80,56 +76,19 @@ export default {
   },
   data() {
     return {
-      // vulue:"11",
-      // se:"hello",
-      // titlesub: "商品管理",
-      // titleTow: "添加商品",
       options: [
         {
           value: "选项1",
-          label: "黄金糕"
+          label: "商品分类一"
         },
         {
           value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
+          label: "商品分类二"
         }
       ],
       value4: "",
       input: "",
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ],
+      tableData: [],
       currentPage1: 5,
       currentPage2: 5,
       currentPage3: 5,
@@ -138,10 +97,13 @@ export default {
   },
   //注册组件
   components: {
-    Header
+    // Header
   },
   created () {
     // this.show=true;
+    commoditymanagement().then((result) => {
+      this.tableData=result.data
+    })
     
   },
   watch: {

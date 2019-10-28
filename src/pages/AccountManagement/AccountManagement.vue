@@ -1,7 +1,7 @@
 <template>
   <!-- 账号管理组件 -->
   <div>
-    <Header></Header>
+    <!-- <Header></Header> -->
     <el-card class="carpadding">
       <div slot="header" class="clearfix">
         <span>账号管理</span>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Header from "../../components/Header.vue";
+// import Header from "../../components/Header.vue";
 import {accountlist} from "../../api/apis"
 export default {
   data() {
@@ -48,7 +48,7 @@ export default {
   },
   //注册组件
   components: {
-    Header
+    // Header
   },
   methods: {
     handleClick(row) {

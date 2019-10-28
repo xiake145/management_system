@@ -1,7 +1,7 @@
 <template>
   <!-- 修改密码组件 -->
   <div>
-    <Header></Header>
+    <!-- <Header></Header> -->
     <el-card class="carpadding">
       <div slot="header" class="clearfix">
         <span>密码修改</span>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Header from "../../components/Header";
+// import Header from "../../components/Header";
 import { changepwd } from "../../api/apis";
 export default {
   data() {
@@ -45,7 +45,7 @@ export default {
     };
   },
   components: {
-    Header
+    // Header
   },
   methods: {
     open() {//修改密码弹窗
